@@ -35,7 +35,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className='container'>
       <ul data-testid='repository-list'>
         {repos.map(({ id, title }) => (
           <li key={id}>
