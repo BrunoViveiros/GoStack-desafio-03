@@ -5,12 +5,25 @@ import './styles.css';
 
 function App() {
   const [repos, setRepos] = useState([]);
+  const [theme, setTheme] = useState({ color: 'dark', text: 'Dark Mode' });
 
   useEffect(() => {
     api.get('repositories').then((response) => {
       setRepos(response.data);
     });
+
+    document.documentElement.classList.add('theme-transition');
   }, []);
+
+  function toggleTheme() {
+    if (theme.color === 'dark') {
+      setTheme({ color: 'light', text: 'Light Mode' });
+    } else {
+      setTheme({ color: 'dark', text: 'Dark Mode' });
+    }
+
+    document.documentElement.setAttribute('data-theme', theme.color);
+  }
 
   async function handleAddRepository() {
     const response = await api.post('repositories', {
@@ -46,6 +59,7 @@ function App() {
       </ul>
 
       <button onClick={handleAddRepository}>Adicionar</button>
+      <button className='theme' onClick={toggleTheme}>{theme.text}</button>
     </div>
   );
 }
